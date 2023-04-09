@@ -22,9 +22,15 @@ The main usage of vibe-chart.py is similar to [billboard.py](https://github.com/
     "rank": 1,
     "title": "Kitsch"
 }
+>>> print(chart.name)
+오늘 Top 100
+>>> print(chart.date)
+2023-04-09 07:00:00
 ```
 
 ### ChartData Arguments
+- `name` – The chart name
+- `date` – The chart date
 - `queryStart` – The starting index of the chart entries to be retrieved from the Vibe API. (default: 1)
 - `queryCount` – The number of items to retrieve from the API response, starting from `queryStart`. (default: 100)
 - `imageSize` – The size of cover image for the track. (default: 256)

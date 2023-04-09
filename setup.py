@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="vibe-chart.py",
-    version="1.0.0",
+    version="1.0.1",
     description="Python API for downloading Naver Vibe charts",
     long_description=long_description,
     long_description_content_type="text/markdown",

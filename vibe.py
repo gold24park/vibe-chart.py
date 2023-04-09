@@ -1,6 +1,7 @@
 import json
 import sys
 import urllib.parse
+from datetime import datetime
 
 import requests
 
@@ -31,6 +32,7 @@ class ChartEntry:
         rank: The track's current rank position on the chart.
         isNew: Whether the track is new to the chart.
     """
+
     def __init__(self, title: str, artist: str, image: str, lastPos: int, rank: int, isNew: bool):
         self.title = title
         self.artist = artist
@@ -63,11 +65,14 @@ class ChartEntry:
 class ChartData:
     """Represents a particular Bugs chart by a particular period.
     Attributes:
+        name: The chart name
+        date: The chart date
         queryStart: The starting index of the chart entries to be retrieved from the Vibe API. (default: 1)
         queryCount: The number of items to retrieve from the API response, starting from `queryStart`. (default: 100)
         imageSize: The size of cover image for the track. (default: 256)
         fetch: A boolean value that indicates whether to retrieve the chart data immediately. If set to `False`, you can fetch the data later using the `fetchEntries()` method.
     """
+
     def __init__(self, queryStart: int = 1, queryCount: int = 100, imageSize: int = 256, fetch: bool = True):
         self.maxQueryCount = 0
         self.queryStart = queryStart
@@ -112,6 +117,8 @@ class ChartData:
     def _parseEntries(self, data):
         try:
             c_data = data['response']['result']['chart']
+            self.name = c_data['title']
+            self.date = self._parseDate(c_data['date'])
             self.maxQueryCount = int(c_data['chartTotalCount'])
 
             for item in c_data['items']['tracks']:
@@ -128,6 +135,10 @@ class ChartData:
 
         except Exception as e:
             raise VibeChartParseException(e)
+
+    def _parseDate(self, timestamp_ms):
+        timestamp_s = timestamp_ms / 1000
+        return datetime.utcfromtimestamp(timestamp_s)
 
     def _getResizedImageUrl(self, url):
         parsed_url = urllib.parse.urlparse(url)
