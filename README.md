@@ -1,4 +1,4 @@
-# vibe-chart.py
+# 💓 바이브 차트 API: vibe-chart.py
 ![vibe](./image.png)
 
 vibe-chart.py is a Python API that retrieves the TOP 100 information from the [Naver Vibe](https://vibe.naver.com/).
